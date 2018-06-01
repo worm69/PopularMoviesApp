@@ -43,7 +43,7 @@ public final class NetworkUtils {
 //    Query para
     private static final String QUERY_API_KEY ="api_key";
     private static final String QUERY_LANGUAGE = "language";
-
+    private static final String QUERY_SORT_ORDER_DEFAULT = "/popular";
     /**
      * Retrieves the proper URL to query for the weather data. The reason for both this method as
      * well as {@link #buildUrlWithLocationQuery(String)} is two fold.
@@ -74,13 +74,14 @@ public final class NetworkUtils {
      * Builds the URL used to talk to the weather server using latitude and longitude of a
      * location.
      *
-     * @param latitude  The latitude of the location
-     * @param longitude The longitude of the location
+     *  latitude  The latitude of the location
+     *  longitude The longitude of the location
      * @return The Url to use to query the weather server.
      */
     private static URL buildUrl() {
         Uri weatherQueryUri = Uri.parse(STATIC_THEMOVIEDB_URL).buildUpon()
-                .appendQueryParameter()
+                .appendPath(QUERY_SORT_ORDER_DEFAULT)
+                .appendQueryParameter(QUERY_API_KEY,"4f2d9b150437a897db3e4112ff29e085")
 //                .appendQueryParameter(LAT_PARAM, String.valueOf(latitude))
 //                .appendQueryParameter(LON_PARAM, String.valueOf(longitude))
 //                .appendQueryParameter(FORMAT_PARAM, format)
