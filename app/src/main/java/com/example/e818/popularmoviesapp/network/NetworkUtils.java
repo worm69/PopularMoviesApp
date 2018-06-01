@@ -78,7 +78,7 @@ public final class NetworkUtils {
      *  longitude The longitude of the location
      * @return The Url to use to query the weather server.
      */
-    private static URL buildUrl() {
+    private static URL buildUrlGetMovies() {
         Uri weatherQueryUri = Uri.parse(STATIC_THEMOVIEDB_URL).buildUpon()
                 .appendPath(QUERY_SORT_ORDER_DEFAULT)
                 .appendQueryParameter(QUERY_API_KEY,"4f2d9b150437a897db3e4112ff29e085")
@@ -90,9 +90,9 @@ public final class NetworkUtils {
                 .build();
 
         try {
-            URL weatherQueryUrl = new URL(weatherQueryUri.toString());
-            Log.v(TAG, "URL: " + weatherQueryUrl);
-            return weatherQueryUrl;
+            URL moviesQueryUrl = new URL(weatherQueryUri.toString());
+            Log.v(TAG, "URL: " + moviesQueryUrl);
+            return moviesQueryUrl;
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
@@ -100,7 +100,49 @@ public final class NetworkUtils {
     }
 
 
+//TODO criar um urlBuilder para criar o url do youtube
+    private static URL buildUrlGetTrailers() {
+        Uri weatherQueryUri = Uri.parse(STATIC_THEMOVIEDB_URL).buildUpon()
+                .appendPath(QUERY_SORT_ORDER_DEFAULT)
+                .appendQueryParameter(QUERY_API_KEY,"4f2d9b150437a897db3e4112ff29e085")
+//                .appendQueryParameter(LAT_PARAM, String.valueOf(latitude))
+//                .appendQueryParameter(LON_PARAM, String.valueOf(longitude))
+//                .appendQueryParameter(FORMAT_PARAM, format)
+//                .appendQueryParameter(UNITS_PARAM, units)
+//                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .build();
 
+        try {
+            URL moviesQueryUrl = new URL(weatherQueryUri.toString());
+            Log.v(TAG, "URL: " + moviesQueryUrl);
+            return moviesQueryUrl;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //TODO criar um urlBuilder para criar o url para download das imagens
+    private static URL buildUrlGetMOvieImage() {
+        Uri weatherQueryUri = Uri.parse(STATIC_THEMOVIEDB_URL).buildUpon()
+                .appendPath(QUERY_SORT_ORDER_DEFAULT)
+                .appendQueryParameter(QUERY_API_KEY,"4f2d9b150437a897db3e4112ff29e085")
+//                .appendQueryParameter(LAT_PARAM, String.valueOf(latitude))
+//                .appendQueryParameter(LON_PARAM, String.valueOf(longitude))
+//                .appendQueryParameter(FORMAT_PARAM, format)
+//                .appendQueryParameter(UNITS_PARAM, units)
+//                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .build();
+
+        try {
+            URL moviesQueryUrl = new URL(weatherQueryUri.toString());
+            Log.v(TAG, "URL: " + moviesQueryUrl);
+            return moviesQueryUrl;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * This method returns the entire result from the HTTP response.
