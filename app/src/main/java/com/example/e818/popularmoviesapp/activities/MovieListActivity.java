@@ -50,26 +50,19 @@ public class MovieListActivity extends AppCompatActivity implements MovieApi.Mov
     public static final String SELECTED_MOVIE = "SELECTED_MOVIE";
 
     @BindView(R.id.sp_order_by)
-    private
     Spinner mSpinnerOrderBy;
     @BindView(R.id.pb_loading)
-    private
     ProgressBar mPbLoading;
     @BindView(R.id.tv_error)
-    private
     TextView mTvError;
     @BindView(R.id.tv_empty)
-    private
     TextView mTvEmpty;
     @BindView(R.id.rv_movie_list)
-    private
     RecyclerView mRvMovieList;
     @BindView(R.id.toolbar)
-    private
     Toolbar mToolbar;
 
     @BindInt(R.integer.col_span)
-    private
     int mColSpan;
 
     private ArrayAdapter<String> mSpinnerAdapter;
@@ -96,7 +89,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieApi.Mov
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (mIsFirstSelection) {
-                    Log.d(TAG, "passed out the first time");
+                    Log.d(TAG, "the first time");
                     mIsFirstSelection = false;
                     return;
                 }

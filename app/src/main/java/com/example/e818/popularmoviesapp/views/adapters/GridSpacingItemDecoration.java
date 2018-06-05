@@ -7,6 +7,8 @@ import android.view.View;
 
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
+//    https://stackoverflow.com/questions/28531996/android-recyclerview-gridlayoutmanager-column-spacing/30701422#30701422
+
     private final int spanCount;
     private final int spacing;
     private final boolean includeEdge;

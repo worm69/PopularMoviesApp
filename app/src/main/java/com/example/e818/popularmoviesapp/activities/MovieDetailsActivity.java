@@ -36,6 +36,7 @@ import com.example.e818.popularmoviesapp.views.adapters.MoviesAdapter;
 import com.example.e818.popularmoviesapp.views.adapters.ReviewsAdapter;
 import com.example.e818.popularmoviesapp.views.adapters.VideosAdapter;
 import com.example.e818.popularmoviesapp.utils.ViewUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,43 +54,30 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
     private static final String VIDEOS_KEY = "VIDEOS_KEY";
 
     @BindView(R.id.iv_movie_backdrop)
-    private
     ImageView mIvBackdrop;
     @BindView(R.id.iv_movie_poster)
-    private
     ImageView mIvPoster;
     @BindView(R.id.tv_movie_title)
-    private
     TextView mTvTitle;
     @BindView(R.id.tv_movie_release_date)
-    private
     TextView mTvReleaseDate;
     @BindView(R.id.tv_movie_overview)
-    private
     TextView mTvOverview;
     @BindView(R.id.tv_movie_vote_average)
-    private
     TextView mTvVoteAverage;
     @BindView(R.id.rv_video_list)
-    private
     RecyclerView mRvVideoList;
     @BindView(R.id.rv_review_list)
-    private
     RecyclerView mRvReviewList;
     @BindView(R.id.tv_there_is_no_video)
-    private
     TextView mTvThereIsNoVideo;
     @BindView(R.id.tv_there_is_no_review)
-    private
     TextView mTvThereIsNoReview;
     @BindView(R.id.pb_video_loading)
-    private
     ProgressBar mPbVideoLoading;
     @BindView(R.id.pb_review_loading)
-    private
     ProgressBar mPbReviewLoading;
     @BindView(R.id.im_movie_favorite)
-    private
     ImageView imMovieFavorite;
 
     private Movie mMovie;
@@ -342,7 +330,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
                 if (!args.containsKey(MOVIE_KEY) || !args.containsKey(REVIEWS_KEY) || !args.containsKey(VIDEOS_KEY)) {
                     throw new IllegalArgumentException("You have to pass the MOVIE_KEY, REVIEWS_KEY and VIDEOS_KEY as arguments.");
                 }
-                Log.d(tags, "antes de criar");
+                Log.d(tags, "Before load");
 
                 return new AsyncTaskLoader<Boolean>(this) {
                     @Override
@@ -370,7 +358,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
                                 Uri movieWIthId = FavoriteMovieContract.MovieEntry.getMovieById(movieId);
                                 Uri reviewsWithMovieId = FavoriteMovieContract.MovieEntry.getReviewsByMovieContentUri(movieId);
                                 Uri videosWithMovieId = FavoriteMovieContract.MovieEntry.getVideosByMovieContentUri(movieId);
-                                Log.d(tags, "deletado");
+                                Log.d(tags, "Delete");
                                 int rowsDeletede = cr.delete(movieWIthId, null, null) +
                                         cr.delete(reviewsWithMovieId, null, null) +
                                         cr.delete(videosWithMovieId, null, null);
@@ -379,11 +367,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
                             } else {
                                 final ArrayList<Review> reviews = args.getParcelableArrayList(REVIEWS_KEY);
                                 final ArrayList<String> videos = args.getStringArrayList(VIDEOS_KEY);
-                                Log.d(tags, "antes de inserir");
+                                Log.d(tags, "Before Insert");
                                 // inserting the movie
                                 cr.insert(FavoriteMovieContract.MovieEntry.CONTENT_URI,
                                         FavoriteHelper.getContentValuesFromMovie(movie));
-                                Log.d(tags, "depois de inserir");
+                                Log.d(tags, "After Insert");
 
                                 // inserting the reviews
                                 if (reviews != null && !reviews.isEmpty()) {
@@ -393,7 +381,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
 
                                     cr.bulkInsert(FavoriteMovieContract.ReviewEntry.CONTENT_URI,
                                             reviewValues);
-                                    Log.d(tags, "depois de inserir reviews");
+                                    Log.d(tags, "After Insert Review");
                                 }
 
                                 // inserting the videos
@@ -404,14 +392,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
 
                                     cr.bulkInsert(FavoriteMovieContract.VideoEntry.CONTENT_URI,
                                             videoValues);
-                                    Log.d(tags, "depois de inserir videos");
+                                    Log.d(tags, "After Insert Video");
                                 }
 
                                 return true;
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
-                            Log.d(tags, "erro muito louco", ex);
+                            Log.d(tags, "Exeption on loadInBackground", ex);
                             return false;
                         } finally {
                             if (cursor != null) {

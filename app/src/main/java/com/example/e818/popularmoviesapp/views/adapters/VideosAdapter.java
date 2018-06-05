@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewHolder> {
 
     private static final String TAG = "VideosAdapter";
+    //i.ytimg.com image host related with youtube
     private static final String BASE_IMAGE_URL = "https://i.ytimg.com/vi/%s/hqdefault.jpg";
     private static final String BASE_VIDEO_URL = "https://www.youtube.com/watch?v=%s";
 
