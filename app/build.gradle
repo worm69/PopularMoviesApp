@@ -1,14 +1,25 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+}
+
+def Properties popularMoviesProperties = new Properties()
+def popularMoviesPropertiesFile = file("${project.projectDir.absolutePath}/popularMovies.properties")
+popularMoviesProperties.load(new FileInputStream(popularMoviesPropertiesFile))
+
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "com.example.e818.popularmoviesapp"
-        minSdkVersion 16
+        applicationId "om.example.e818.popularmoviesapp"
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'THE_MOVIE_DB_APP_KEY', popularMoviesProperties['TheMovieDb.apikey']
     }
     buildTypes {
         release {
@@ -19,14 +30,21 @@ android {
 }
 
 dependencies {
-    implementation 'org.glassfish:javax.annotation:10.0-b28'
-    implementation 'com.google.code.gson:gson:2.2.+'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+    implementation('com.squareup.retrofit2:converter-gson:2.1.0') { transitive = false }
+    implementation 'com.jakewharton:butterknife:8.4.0'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testImplementation 'junit:junit:4.12'
 }

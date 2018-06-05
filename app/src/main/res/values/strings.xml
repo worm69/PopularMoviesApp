@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Popular Movies App</string>
+    <string name="app_name">The Movie App</string>
+    <string name="error_something_went_wrong">Please try again later!</string>
+    <string name="text_empty">Not found!</string>
+    <string name="text_movie_overview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sapien ligula, facilisis ac pharetra ut, tincidunt sit amet ligula. Morbi id velit vitae nibh accumsan egestas eu id tellus. Integer pellentesque erat lectus, non elementum nisl accumsan quis. Fusce massa felis, volutpat at nibh et, faucibus dapibus magna. Aliquam aliquet sagittis eleifend. Curabitur laoreet sed tortor vel accumsan. Fusce ac tellus felis. Praesent hendrerit tempus sodales. </string>
+    <string name="text_movie_overview_label">OVERVIEW</string>
+    <string name="text_movie_videos_label">VIDEOS</string>
+    <string name="text_movie_reviews_label">REVIEWS</string>
+    <string name="text_movie_vote_average">7.98</string>
+    <string name="text_movie_vote_average_label">Vote average:</string>
+    <string name="text_movie_title">Rambo</string>
+    <string name="text_error_there_is_no_video">Noting to show!</string>
+    <string name="text_error_there_is_no_review">Noting to show!</string>
+    <string name="contentDescriptionImageViewItem">Movie Poster</string>
+    <string name="contentDescriptionImageViewItemTrailer">Movie Trailer</string>
 </resources>
