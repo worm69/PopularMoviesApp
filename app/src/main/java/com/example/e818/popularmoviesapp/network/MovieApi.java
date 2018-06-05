@@ -45,13 +45,13 @@ public final class MovieApi {
         return call;
     }
 
-    public void getTopRatedMovies(final MovieResultListener movieListener) {
-        mLastCall = tryToCancelLastCall(mLastCall, mService.getTopRatedMovies(BuildConfig.THE_MOVIE_DB_APP_KEY));
+    public void getTopRatedMovies(final MovieResultListener movieListener, int pageindex) {
+        mLastCall = tryToCancelLastCall(mLastCall, mService.getTopRatedMovies(BuildConfig.THE_MOVIE_DB_APP_KEY, pageindex));
         executeCall(mLastCall, movieListener);
     }
 
-    public void getPopularMovies(final MovieResultListener movieListener) {
-        mLastCall = tryToCancelLastCall(mLastCall, mService.getPopularMovies(BuildConfig.THE_MOVIE_DB_APP_KEY));
+    public void getPopularMovies(final MovieResultListener movieListener, int pageindex) {
+        mLastCall = tryToCancelLastCall(mLastCall, mService.getPopularMovies(BuildConfig.THE_MOVIE_DB_APP_KEY, pageindex));
         executeCall(mLastCall, movieListener);
     }
 

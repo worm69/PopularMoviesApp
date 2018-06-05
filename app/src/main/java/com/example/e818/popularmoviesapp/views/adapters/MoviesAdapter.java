@@ -28,6 +28,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     private OnBottomReachedListener onBottomReachedListener;
     private final ListItemClickListener mOnClickListener;
     private List<Movie> mMovies;
+//  New pagination
+    private boolean isLoadingAdded = false;
+    private boolean retryPageLoad = false;
 
     public MoviesAdapter(final ListItemClickListener onClickItemListener, List<Movie> movies) {
         Log.d(TAG, movies.size() + " items loaded");
@@ -46,7 +49,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         return new MovieViewHolder(view);
     }
-
+//TODO: Remover trocar por melhor sistema
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         holder.bind(mMovies.get(position));
@@ -118,6 +121,63 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
                 Log.d(TAG, "Item position" + position + " has been clicked");
                 listener.onListItemClick(movie);
             }
+        }
+
+//    new pagination
+        /*
+        Helpers - Pagination
+   _________________________________________________________________________________________________
+    */
+
+        public void add(Movie r) {
+            mMovies.add(r);
+            notifyItemInserted(mMovies.size() - 1);
+        }
+
+        public void addAll(List<Movie> moveResults) {
+            for (Movie result : moveResults) {
+                add(result);
+            }
+        }
+
+        public void remove(Movie r) {
+            int position = mMovies.indexOf(r);
+            if (position > -1) {
+                mMovies.remove(position);
+                notifyItemRemoved(position);
+            }
+        }
+
+        public void clear() {
+            isLoadingAdded = false;
+            while (getItemCount() > 0) {
+                remove(getItem(0));
+            }
+        }
+
+        public boolean isEmpty() {
+            return getItemCount() == 0;
+        }
+
+
+        public void addLoadingFooter() {
+            isLoadingAdded = true;
+            add(new Movie());
+        }
+
+        public void removeLoadingFooter() {
+            isLoadingAdded = false;
+
+            int position = mMovies.size() - 1;
+            Movie result = getItem(position);
+
+            if (result != null) {
+                mMovies.remove(position);
+                notifyItemRemoved(position);
+            }
+        }
+        public Movie getItem(int position) {
+            return mMovies.get(position);
         }
     }
 }

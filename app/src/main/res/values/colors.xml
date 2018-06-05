@@ -14,4 +14,8 @@
     <color name="blackTransparent">#80000000</color>
     <color name="black50Transparent">#7F000000</color>
     <color name="black30Transparent">#4C000000</color>
+
+    <!--new pagination-->
+    <color name="placeholder_grey">#AAADC4</color>
+    <color name="placeholder_grey_20">#33AAADC4</color>
 </resources>

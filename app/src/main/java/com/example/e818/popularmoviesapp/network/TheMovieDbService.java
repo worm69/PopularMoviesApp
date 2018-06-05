@@ -10,11 +10,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 interface TheMovieDbService {
+//    new pagination
     @GET("movie/top_rated")
-    Call<Result<Movie>> getTopRatedMovies(@Query("api_key") String apiKey);
+    Call<Result<Movie>> getTopRatedMovies(@Query("api_key") String apiKey,@Query("page") int pageIndex);
 
     @GET("movie/popular")
-    Call<Result<Movie>> getPopularMovies(@Query("api_key") String apiKey);
+    Call<Result<Movie>> getPopularMovies(@Query("api_key") String apiKey,@Query("page") int pageIndex);
 
     @GET("movie/{movieId}/reviews")
     Call<Result<Review>> getReviewsByMovies(@Path("movieId") int movieId, @Query("api_key") String apiKey);

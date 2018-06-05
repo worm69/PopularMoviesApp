@@ -35,7 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MovieListActivity extends AppCompatActivity implements MovieApi.MovieResultListener, MoviesAdapter.ListItemClickListener, LoaderManager.LoaderCallbacks<ArrayList<Movie>> {
+public class MovieListActivity extends AppCompatActivity implements
+        MovieApi.MovieResultListener, MoviesAdapter.ListItemClickListener, LoaderManager.LoaderCallbacks<ArrayList<Movie>> {
 
 //    TODO: Procura por nome
 
@@ -71,6 +72,19 @@ public class MovieListActivity extends AppCompatActivity implements MovieApi.Mov
     private boolean mIsFirstSelection = true;
     private Unbinder mUnbinder;
 
+
+//    new pagination
+    private static final int PAGE_START = 1;
+
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
+    private int TOTAL_PAGES = 5;
+    private int currentPage = PAGE_START;
+    private int lastPosition = 0;
+
+    private String itemSelectedSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +109,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieApi.Mov
                 }
 
                 String itemSelected = (String) parent.getItemAtPosition(position);
+                itemSelectedSpinner = itemSelected;
                 if (!TextUtils.isEmpty(itemSelected)) {
                     if (itemSelected.equals(SPINNER_ITEM_TOP_RATED)) {
                         Log.d(TAG, "top rated selected");
@@ -154,6 +169,30 @@ public class MovieListActivity extends AppCompatActivity implements MovieApi.Mov
             @Override
             public void onBottomReached(int position) {
 //                TODO carregar +20
+
+
+
+                if (!TextUtils.isEmpty(itemSelectedSpinner) && position == lastPosition) {
+                    if (itemSelectedSpinner.equals(SPINNER_ITEM_TOP_RATED)) {
+                        Log.d(TAG, "top rated selected");
+                        currentPage++;
+                        tryShowTopRated();
+                    }
+
+                    if (itemSelectedSpinner.equals(SPINNER_ITEM_MOST_POPULAR)) {
+                        Log.d(TAG, "most popular selected");
+                        currentPage++;
+                        tryShowMostPopular();
+                    }
+
+                    if (itemSelectedSpinner.equals(SPINNER_ITEM_FAVORITES)) {
+                        Log.d(TAG, "favorites selected");
+                        tryShowFavorites();
+                        return;
+                    }
+                }
+                if(position >= lastPosition)
+                    lastPosition = position;
                 Log.d(TAG, "onBottomReached!");
             }
         });
@@ -179,12 +218,12 @@ public class MovieListActivity extends AppCompatActivity implements MovieApi.Mov
 
     private void tryShowTopRated() {
         showLoading();
-        MovieApi.instance().getTopRatedMovies(this);
+        MovieApi.instance().getTopRatedMovies(this, currentPage);
     }
 
     private void tryShowMostPopular() {
         showLoading();
-        MovieApi.instance().getPopularMovies(this);
+        MovieApi.instance().getPopularMovies(this, currentPage);
     }
 
     private void tryShowFavorites() {
