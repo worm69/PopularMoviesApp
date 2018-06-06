@@ -28,7 +28,6 @@ public class Review implements Parcelable {
     private String content;
 
     public Review() {
-        //
     }
 
     private Review(Parcel in) {

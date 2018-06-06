@@ -37,14 +37,12 @@ public class Movie implements Parcelable {
     private Float voteAverage;
 
     public Movie() {
-        //
     }
 
     private Movie(Parcel in) {
         id = in.readInt();
         posterPath = in.readString();
         backdropPath = in.readString();
-
         title = in.readString();
         releaseDate = in.readString();
         voteAverage = in.readFloat();
@@ -117,7 +115,6 @@ public class Movie implements Parcelable {
         dest.writeInt(id);
         dest.writeString(posterPath);
         dest.writeString(backdropPath);
-
         dest.writeString(title);
         dest.writeString(releaseDate);
         dest.writeFloat(voteAverage);

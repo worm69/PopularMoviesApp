@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 interface TheMovieDbService {
-//    new pagination
+// added pageIndex for pagination
     @GET("movie/top_rated")
     Call<Result<Movie>> getTopRatedMovies(@Query("api_key") String apiKey,@Query("page") int pageIndex);
 

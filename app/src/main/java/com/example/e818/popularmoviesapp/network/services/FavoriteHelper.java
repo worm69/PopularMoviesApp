@@ -11,7 +11,6 @@ import com.example.e818.popularmoviesapp.models.Review;
 public class FavoriteHelper {
 
     private FavoriteHelper() {
-        // do nothing
     }
 
     private static String getStringFromCursor(final Cursor cursor, final String columnName) {
@@ -44,6 +43,7 @@ public class FavoriteHelper {
         movieValues.put(FavoriteMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH, movie.getPosterPath());
         movieValues.put(FavoriteMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE, movie.getReleaseDate());
         movieValues.put(FavoriteMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE, movie.getVoteAverage());
+
         return movieValues;
     }
 
@@ -57,7 +57,6 @@ public class FavoriteHelper {
             reviewValue.put(FavoriteMovieContract.ReviewEntry.COLUMN_NAME_AUTHOR, review.getAuthor());
             reviewValue.put(FavoriteMovieContract.ReviewEntry.COLUMN_NAME_CONTENT, review.getContent());
             rvs[rI] = reviewValue;
-
         }
 
         return rvs;

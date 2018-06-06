@@ -7,7 +7,6 @@
     <!--new pagination-->
 
     <LinearLayout
-        android:id="@+id/error_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -22,7 +21,6 @@
             android:text="@string/error_msg"/>
 
         <TextView
-            android:id="@+id/error_txt_cause"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +29,6 @@
             tools:text="The server took too long to respond."/>
 
         <Button
-            android:id="@+id/error_btn_retry"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -5,7 +5,6 @@ import android.provider.BaseColumns;
 
 public final class FavoriteMovieContract {
     private FavoriteMovieContract() {
-        // nothing
     }
 
     static final String AUTHORITY = "com.example.e818.popularmoviesapp";

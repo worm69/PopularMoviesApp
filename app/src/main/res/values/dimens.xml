@@ -1,8 +1,6 @@
 <resources>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="spinner_margin">16dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
-    <!--new pagination-->
     <dimen name="activity_margin_quarter">4dp</dimen>
     <dimen name="activity_margin_content">24dp</dimen>
 </resources>

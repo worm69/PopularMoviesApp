@@ -42,6 +42,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+// BindView Dont work good with private
+@SuppressWarnings("WeakerAccess")
 public class MovieDetailsActivity extends AppCompatActivity implements VideosAdapter.ListItemClickListener,
         LoaderManager.LoaderCallbacks<Boolean> {
 
@@ -89,7 +91,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
     private Unbinder mUnbinder;
     private final MovieApi.VideoResultListener mVideoListener = new MovieApi.VideoResultListener() {
         @Override
-        public void onSuccessResult(final ArrayList<Video> videos, int totalVideos, int totalPages) {
+        public void onSuccessResult(final ArrayList<Video> videos, int totalVideos, int totalPages, boolean append) {
             final ArrayList<String> videoList = new ArrayList<>();
 
             if (videos != null) {
@@ -116,7 +118,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
     };
     private final MovieApi.ReviewResultListener mReviewListener = new MovieApi.ReviewResultListener() {
         @Override
-        public void onSuccessResult(final ArrayList<Review> reviews, int totalVideos, int totalPages) {
+        public void onSuccessResult(final ArrayList<Review> reviews, int totalVideos, int totalPages, boolean append) {
             mReviewsAdapter.setReviews(reviews);
             if (reviews != null && reviews.isEmpty()) {
                 showNoReviews();
@@ -135,7 +137,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
@@ -235,7 +237,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
 
     private void tryShowVideos() {
         showLoadingVideos();
-        MovieApi.instance().getVideosByMovies(mMovie.getId(), mVideoListener);
+        MovieApi.instance().getVideosByMovies(mMovie.getId(), mVideoListener, false);
     }
 
     private void showVideos() {
@@ -261,7 +263,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
 
     private void tryShowReviews() {
         showLoadingReviews();
-        MovieApi.instance().getReviewsByMovies(mMovie.getId(), mReviewListener);
+        MovieApi.instance().getReviewsByMovies(mMovie.getId(), mReviewListener, false);
     }
 
     private void showReviews() {
@@ -347,7 +349,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements VideosAda
                         try {
                             final ContentResolver cr = getContentResolver();
                             final Movie movie = args.getParcelable(MOVIE_KEY);
-                            final int movieId = movie.getId();
+                            final int movieId = movie != null ? movie.getId() : 0;
                             String[] selectionArgs = new String[]{String.valueOf(movieId)};
                             cursor = cr.query(FavoriteMovieContract.MovieEntry.CONTENT_URI,
                                     new String[]{FavoriteMovieContract.MovieEntry._ID},

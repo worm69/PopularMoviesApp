@@ -4,7 +4,7 @@ repositories {
     mavenCentral()
 }
 
-def Properties popularMoviesProperties = new Properties()
+Properties popularMoviesProperties = new Properties()
 def popularMoviesPropertiesFile = file("${project.projectDir.absolutePath}/popularMovies.properties")
 popularMoviesProperties.load(new FileInputStream(popularMoviesPropertiesFile))
 

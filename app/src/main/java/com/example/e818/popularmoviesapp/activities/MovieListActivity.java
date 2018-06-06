@@ -35,10 +35,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+//  BindView Dont work good with private
+@SuppressWarnings("WeakerAccess")
 public class MovieListActivity extends AppCompatActivity implements
         MovieApi.MovieResultListener, MoviesAdapter.ListItemClickListener, LoaderManager.LoaderCallbacks<ArrayList<Movie>> {
-
-//    TODO: Procura por nome
 
     private static final String SPINNER_ITEM_TOP_RATED = "Top rated";
     private static final String SPINNER_ITEM_MOST_POPULAR = "Most popular";
@@ -72,14 +72,11 @@ public class MovieListActivity extends AppCompatActivity implements
     private boolean mIsFirstSelection = true;
     private Unbinder mUnbinder;
 
-
-//    new pagination
     private static final int PAGE_START = 1;
 
     private boolean isLoading = false;
     private boolean isLastPage = false;
-    // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
-    private int TOTAL_PAGES = 5;
+
     private int currentPage = PAGE_START;
     private int lastPosition = 0;
 
@@ -113,13 +110,15 @@ public class MovieListActivity extends AppCompatActivity implements
                 if (!TextUtils.isEmpty(itemSelected)) {
                     if (itemSelected.equals(SPINNER_ITEM_TOP_RATED)) {
                         Log.d(TAG, "top rated selected");
-                        tryShowTopRated();
+                        lastPosition = currentPage = 1;
+                        tryShowTopRated(false);
                         return;
                     }
 
                     if (itemSelected.equals(SPINNER_ITEM_MOST_POPULAR)) {
                         Log.d(TAG, "most popular selected");
-                        tryShowMostPopular();
+                        lastPosition = currentPage = 1;
+                        tryShowMostPopular(false);
                         return;
                     }
 
@@ -161,28 +160,28 @@ public class MovieListActivity extends AppCompatActivity implements
         }
 
         mRvMovieList.setLayoutManager(new GridLayoutManager(this, mColSpan));
-        mRvMovieList.setHasFixedSize(true);
+        mRvMovieList.setHasFixedSize(false);// We can also enable optimizations if the items are static and will not change for significantly smoother scrolling:
         mRvMovieList.addItemDecoration(new GridSpacingItemDecoration(mColSpan, 0, true));
         mRvMovieList.setAdapter(mMoviesAdapter);
 
         mMoviesAdapter.setOnBottomReachedListener(new MoviesAdapter.OnBottomReachedListener() {
             @Override
             public void onBottomReached(int position) {
-//                TODO carregar +20
-
-
-
+//                TODO Melhorar a forma de loading!
                 if (!TextUtils.isEmpty(itemSelectedSpinner) && position == lastPosition) {
+
+
                     if (itemSelectedSpinner.equals(SPINNER_ITEM_TOP_RATED)) {
                         Log.d(TAG, "top rated selected");
                         currentPage++;
-                        tryShowTopRated();
+                        tryShowTopRated(true);
+
                     }
 
                     if (itemSelectedSpinner.equals(SPINNER_ITEM_MOST_POPULAR)) {
                         Log.d(TAG, "most popular selected");
                         currentPage++;
-                        tryShowMostPopular();
+                        tryShowMostPopular(true);
                     }
 
                     if (itemSelectedSpinner.equals(SPINNER_ITEM_FAVORITES)) {
@@ -216,14 +215,14 @@ public class MovieListActivity extends AppCompatActivity implements
         super.onSaveInstanceState(outState);
     }
 
-    private void tryShowTopRated() {
+    private void tryShowTopRated(boolean append) {
         showLoading();
-        MovieApi.instance().getTopRatedMovies(this, currentPage);
+        MovieApi.instance().getTopRatedMovies(this, currentPage, append);
     }
 
-    private void tryShowMostPopular() {
+    private void tryShowMostPopular(boolean append) {
         showLoading();
-        MovieApi.instance().getPopularMovies(this, currentPage);
+        MovieApi.instance().getPopularMovies(this, currentPage, append);
     }
 
     private void tryShowFavorites() {
@@ -261,9 +260,16 @@ public class MovieListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onSuccessResult(ArrayList<Movie> movies, int totalMovies, int totalPages) {
+    public void onSuccessResult(ArrayList<Movie> movies, int totalMovies, int totalPages, boolean append) {
+        //TODO não carregar mais caso sejá a ultima pagina
         if (movies == null) {
             showError();
+            return;
+        }
+
+        if (totalMovies >= 1 && append) {
+            mMoviesAdapter.addAll(movies);
+            showMovies();
             return;
         }
 
@@ -272,6 +278,7 @@ public class MovieListActivity extends AppCompatActivity implements
             showMovies();
             return;
         }
+
 
         mMoviesAdapter.setMovies(new ArrayList<Movie>());
         showEmpty();
@@ -361,4 +368,5 @@ public class MovieListActivity extends AppCompatActivity implements
         // do nothing
         Log.d(TAG, "onLoaderReset called!");
     }
+
 }

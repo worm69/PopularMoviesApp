@@ -45,25 +45,25 @@ public final class MovieApi {
         return call;
     }
 
-    public void getTopRatedMovies(final MovieResultListener movieListener, int pageindex) {
+    public void getTopRatedMovies(final MovieResultListener movieListener, int pageindex, boolean append) {
         mLastCall = tryToCancelLastCall(mLastCall, mService.getTopRatedMovies(BuildConfig.THE_MOVIE_DB_APP_KEY, pageindex));
-        executeCall(mLastCall, movieListener);
+        executeCall(mLastCall, movieListener, append);
     }
 
-    public void getPopularMovies(final MovieResultListener movieListener, int pageindex) {
+    public void getPopularMovies(final MovieResultListener movieListener, int pageindex, boolean append) {
         mLastCall = tryToCancelLastCall(mLastCall, mService.getPopularMovies(BuildConfig.THE_MOVIE_DB_APP_KEY, pageindex));
-        executeCall(mLastCall, movieListener);
+        executeCall(mLastCall, movieListener, append);
     }
 
-    public void getVideosByMovies(final int movieId, final VideoResultListener videoListener) {
-        executeCall(mService.getVideosByMovies(movieId, BuildConfig.THE_MOVIE_DB_APP_KEY), videoListener);
+    public void getVideosByMovies(final int movieId, final VideoResultListener videoListener,  boolean append) {
+        executeCall(mService.getVideosByMovies(movieId, BuildConfig.THE_MOVIE_DB_APP_KEY), videoListener, append);
     }
 
-    public void getReviewsByMovies(final int movieId, final ReviewResultListener reviewListener) {
-        executeCall(mService.getReviewsByMovies(movieId, BuildConfig.THE_MOVIE_DB_APP_KEY), reviewListener);
+    public void getReviewsByMovies(final int movieId, final ReviewResultListener reviewListener,  boolean append) {
+        executeCall(mService.getReviewsByMovies(movieId, BuildConfig.THE_MOVIE_DB_APP_KEY), reviewListener, append);
     }
 
-    private <T> void executeCall(final Call<Result<T>> call, final ResultListener<T> listener) {
+    private <T> void executeCall(final Call<Result<T>> call, final ResultListener<T> listener, final boolean append) {
         if (listener == null) {
             return;
         }
@@ -73,7 +73,7 @@ public final class MovieApi {
             public void onResponse(Call<Result<T>> call, Response<Result<T>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     final Result<T> result = response.body();
-                    listener.onSuccessResult(result.getResults(), result.getTotalResults(), result.getTotalPages());
+                    listener.onSuccessResult(result.getResults(), result.getTotalResults(), result.getTotalPages(), append);
                 } else {
                     listener.onFailure(new RuntimeException(response.message()));
                 }
@@ -87,20 +87,20 @@ public final class MovieApi {
     }
 
     public interface ResultListener<T> {
-        void onSuccessResult(ArrayList<T> results, int totalResults, int totalPages);
+        void onSuccessResult(ArrayList<T> results, int totalResults, int totalPages, boolean append);
 
         void onFailure(Throwable exception);
     }
 
     public interface MovieResultListener extends ResultListener<Movie> {
-        // listener for Movies
+        // interface listener for Movies
     }
 
     public interface VideoResultListener extends ResultListener<Video> {
-        // listener for Videos
+        // interface listener for Videos
     }
 
     public interface ReviewResultListener extends ResultListener<Review> {
-        // listener for Reviews
+        // interface listener for Reviews
     }
 }

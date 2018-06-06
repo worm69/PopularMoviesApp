@@ -30,7 +30,6 @@ public class Video implements Parcelable {
     private String site;
 
     public Video() {
-        //
     }
 
     private Video(Parcel in) {
