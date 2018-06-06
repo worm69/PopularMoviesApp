@@ -46,7 +46,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         return new MovieViewHolder(view);
     }
-//TODO: Remover trocar por melhor sistema
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         holder.bind(mMovies.get(position));

@@ -75,7 +75,6 @@ public class MovieListActivity extends AppCompatActivity implements
     private static final int PAGE_START = 1;
 
     private boolean isLoading = false;
-    private boolean isLastPage = false;
 
     private int currentPage = PAGE_START;
     private int lastPosition = 0;
@@ -167,8 +166,8 @@ public class MovieListActivity extends AppCompatActivity implements
         mMoviesAdapter.setOnBottomReachedListener(new MoviesAdapter.OnBottomReachedListener() {
             @Override
             public void onBottomReached(int position) {
-//                TODO Melhorar a forma de loading!
-                if (!TextUtils.isEmpty(itemSelectedSpinner) && position == lastPosition) {
+//                TODO : Pequeno bug de tela branca no loading
+                if (!TextUtils.isEmpty(itemSelectedSpinner) && position > lastPosition  && !isLoading) {
 
 
                     if (itemSelectedSpinner.equals(SPINNER_ITEM_TOP_RATED)) {
@@ -253,6 +252,8 @@ public class MovieListActivity extends AppCompatActivity implements
     }
 
     private void showLoading() {
+        //new
+        isLoading = true;
         ViewUtils.getInstance()
                 .gone(mTvError, mRvMovieList, mTvEmpty)
                 .visible(mPbLoading);
@@ -261,21 +262,22 @@ public class MovieListActivity extends AppCompatActivity implements
 
     @Override
     public void onSuccessResult(ArrayList<Movie> movies, int totalMovies, int totalPages, boolean append) {
-        //TODO não carregar mais caso sejá a ultima pagina
         if (movies == null) {
             showError();
             return;
         }
 
-        if (totalMovies >= 1 && append) {
+        if (totalMovies >= 1 && append && totalPages!= currentPage) {
             mMoviesAdapter.addAll(movies);
             showMovies();
+            isLoading =false;
             return;
         }
 
         if (totalMovies >= 1) {
             mMoviesAdapter.setMovies(movies);
             showMovies();
+            isLoading =false;
             return;
         }
 
