@@ -15,5 +15,5 @@
     <string name="contentDescriptionImageViewItemTrailer">Movie Trailer</string>
     <string name="error_msg">Sorry! Couldn\'t fetch movies.</string>
     <string name="btn_retry">Retry</string>
-
+    <string name="error_network">The server took too long to respond.</string>
 </resources>

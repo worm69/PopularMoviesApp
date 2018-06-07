@@ -78,7 +78,5 @@
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!--new pagination-->
-    <include layout="@layout/error_layout"/>
 
 </android.support.design.widget.CoordinatorLayout>

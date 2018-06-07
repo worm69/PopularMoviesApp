@@ -29,6 +29,6 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            tools:text="One Flew Over the Cuckoo's Nest" />
+            tools:text="@string/text_movie_title"/>
     </LinearLayout>
 </FrameLayout>

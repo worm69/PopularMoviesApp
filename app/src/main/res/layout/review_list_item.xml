@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:text="Uilque Messias" />
+        tools:text="@string/text_movie_title" />
 
     <TextView
         android:id="@+id/tv_content"
@@ -21,5 +21,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="14sp"
-        tools:text="I watched this movie with my wife and I just find myself excited about how well produced this movie is" />
+        tools:text="@string/text_movie_overview" />
 </LinearLayout>
